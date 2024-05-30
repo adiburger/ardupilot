@@ -1,0 +1,9 @@
+leader
+SYSID_THISMAV 2
+IP localhost
+PORT 5770
+
+follower
+SYSID_THISMAV 1
+IP localhost
+PORT 5760
