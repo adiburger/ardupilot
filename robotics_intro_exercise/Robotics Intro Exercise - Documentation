@@ -1,0 +1,54 @@
+Robotics Intro Exercise - Documentation 
+
+Adi Burger
+30.05.2024
+
+after forking and cloning the project to local environment - build the project for SITL according to the instructions:
+		./waf configure --board sitl
+		./waf copter
+
+add a location by adding it's coordinates to the file locations.txt
+	** added Habima and Dizi_Square
+
+mission commands order- 
+1. connect
+2. set mode (guided)
+3. arm
+4. take off
+5. rtl\ land
+6. disarm
+7. disconnect
+
+In order to allow a follower copter to track the leader we assume both copters - leader and follower already took off.
+
+from that point - the leader will be guided manually while the follower automatically follows.
+
+Required python libraries:
+* pymavutil in pymavlink - allows communication in mavlink protocol via python interface
+  enables control on single copter
+
+In Mission Planner - in order to perform swarm mode with a leader and a follower do the following:
+1. run SITL with the following command - 
+	sim_vehicle.py -v Copter --map --console --count 2 --auto-sysid --location Habima --auto-offset-line 90,10 --no-mavproxy
+2. connect both drones (right clink + connect options + according to the ports in the ArduCopter tabs)
+3. CTRL + f -> swarm
+4. set a leader drone and press start 
+5. from that point you can guide the leader drone and the follower will fly towards it (assuming both already took off). 
+
+TODO:
+1. make the script work - it is indeed writen BUT - because of time limitations there are bugs.
+   Though the general concept is clear, the performances requires improvement.
+
+There are few unresolved problems:
+* The concept of swarm is not very clear - worked manually after both drones took off - can you start the mission when both of them on the ground?
+  currently able to send takeoff command only to the leader.
+    ** the control of two drones in a swarm succeeded in Mission Planners GUI but not through python
+
+* Reposition command stacks the program and does not force the drone to move though I've checked the syntax few times (probably not enough though...)
+
+* Because of the issues mentioned above I wasn't able to assure the threading part works as expected.
+
+2. Verify if after takeoff the follower should be transferred to follow mode - assuming it does
+3. load mission to the leader drone and fly it autonomously while the follower drone follows along the mission.
+4. Expand the knowledge of mission modes - not clear enough for me.
+5. Improve script's design, documentation and clarity
